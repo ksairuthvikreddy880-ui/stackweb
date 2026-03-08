@@ -175,11 +175,14 @@
     <!-- Supabase JS Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
+    <!-- Load Configuration -->
+    <script src="js/config.js"></script>
+    
     <script>
         // Inline Supabase Configuration and Service
-        const SUPABASE_URL = 'https://axcyusvthsoruuzjoxil.supabase.co';
+        const SUPABASE_URL = window.CONFIG.supabase.url;
         // Using service_role key for admin panel (bypasses RLS)
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4Y3l1c3Z0aHNvcnV1empveGlsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mjk2NTAyMiwiZXhwIjoyMDg4NTQxMDIyfQ.cnz73t4NR5_l-vHSB4g4zUFD6K5hfOII0iwfIIW2ND0';
+        const SUPABASE_KEY = window.CONFIG.supabase.serviceRoleKey;
         
         // Initialize Supabase client
         let supabaseClient = null;

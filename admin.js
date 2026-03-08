@@ -1,7 +1,7 @@
 // Admin Panel JavaScript
 
-// Admin password (change this to your secure password)
-const ADMIN_PASSWORD = 'stackweb@qwerty'; // Your secure admin code
+// Admin password from config
+const ADMIN_PASSWORD = window.CONFIG?.admin?.password || 'stackweb@qwerty';
 
 let allProjects = [];
 let filteredProjects = [];
@@ -314,19 +314,21 @@ async function updateStatus(projectId, newStatus) {
 
 // Contact client
 function contactClient(email, phone) {
-    // Format phone number for WhatsApp (remove spaces, dashes, and add country code if needed)
-    let whatsappNumber = phone.replace(/[\s\-\(\)]/g, '');
+    // Get config values
+    const whatsappNumber = phone.replace(/[\s\-\(\)]/g, '');
+    const adminName = window.CONFIG?.whatsapp?.adminName || 'Ruthvik';
     
-    // If number starts with +, remove it for WhatsApp API
-    if (whatsappNumber.startsWith('+')) {
-        whatsappNumber = whatsappNumber.substring(1);
+    // Format phone number for WhatsApp
+    let formattedNumber = whatsappNumber;
+    if (formattedNumber.startsWith('+')) {
+        formattedNumber = formattedNumber.substring(1);
     }
     
     // Pre-filled message
-    const message = encodeURIComponent('Hi, I am Ruthvik from Stackweb');
+    const message = encodeURIComponent(`Hi, I am ${adminName} from Stackweb`);
     
     // Open WhatsApp with pre-filled message
-    window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+    window.open(`https://wa.me/${formattedNumber}?text=${message}`, '_blank');
 }
 
 // Format helpers

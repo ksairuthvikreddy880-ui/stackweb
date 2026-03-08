@@ -346,10 +346,13 @@
     <!-- Supabase JS Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
+    <!-- Load Configuration -->
+    <script src="js/config.js"></script>
+    
     <script>
         // Inline Supabase Configuration and Service for Project Form
-        const SUPABASE_URL = 'https://axcyusvthsoruuzjoxil.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4Y3l1c3Z0aHNvcnV1empveGlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5NjUwMjIsImV4cCI6MjA4ODU0MTAyMn0.yh0zagPHaG0BKJvp6P2QwbPreFR7E-fTONa7CPkTT6Y';
+        const SUPABASE_URL = window.CONFIG.supabase.url;
+        const SUPABASE_KEY = window.CONFIG.supabase.anonKey;
         
         let supabaseClient = null;
         
