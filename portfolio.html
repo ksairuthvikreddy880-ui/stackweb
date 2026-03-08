@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Portfolio | Stackweb</title>
+    <meta name="description" content="Explore our portfolio of premium web designs across different industries">
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="portfolio.css">
+</head>
+<body>
+    
+    <!-- Background Elements -->
+    <div class="bg-gradient bg-gradient-1"></div>
+    <div class="bg-gradient bg-gradient-2"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Stack<span>web</span></a>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="portfolio.html" class="nav-link active">Portfolio</a>
+                <a href="index.html#about" class="nav-link">About</a>
+                <a href="project-form.html" class="btn-primary">Start a Project</a>
+            </nav>
+            <button class="mobile-menu-btn" aria-label="Toggle Menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="portfolio-main">
+        
+        <!-- Hero Section -->
+        <section class="portfolio-hero">
+            <div class="container">
+                <h1 class="hero-title">Our <span class="text-accent">Portfolio</span> <span class="coming-soon-badge">COMING SOON</span></h1>
+                <p class="hero-subtitle">Explore our collection of premium web designs across different industries</p>
+            </div>
+        </section>
+
+        <!-- Filter Tabs -->
+        <section class="filter-section">
+            <div class="container">
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-category="all">All Projects</button>
+                    <button class="filter-tab" data-category="professional">Professional</button>
+                    <button class="filter-tab" data-category="gaming">Gaming</button>
+                    <button class="filter-tab" data-category="startup">Startup</button>
+                    <button class="filter-tab" data-category="ecommerce">E-commerce</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Grid -->
+        <section class="portfolio-section">
+            <div class="container">
+                <div class="portfolio-grid">
+                    
+                    <!-- Professional Projects -->
+                    <div class="portfolio-card" data-category="professional">
+                        <div class="card-image">
+                            <img src="assets/fintech_v2.png" alt="Corporate Dashboard">
+                            <div class="card-overlay">
+                                <button class="view-btn" onclick="openDemo('professional', 1)">View Demo</button>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <span class="card-category">Professional</span>
+                            <h3>Corporate Dashboard</h3>
+                            <p>Modern analytics dashboard for enterprise businesses</p>
+                            <div class="card-tags">
+                                <span class="tag">Dashboard</span>
+                                <span class="tag">Analytics</span>
+                                <span class="tag">Corporate</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card" data-category="professional">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop" alt="Business Consulting">
+                            <div class="card-overlay">
+                                <button class="view-btn" onclick="openDemo('professional', 2)">View Demo</button>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <span class="card-category">Professional</span>
+                            <h3>Business Consulting</h3>
+                            <p>Professional consulting firm website with service showcase</p>
+                            <div class="card-tags">
+                                <span class="tag">Corporate</span>
+                                <span class="tag">Services</span>
+                                <span class="tag">B2B</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gaming Projects -->
+                    <div class="portfolio-card" data-category="gaming">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop" alt="Esports Team">
+                            <div class="card-overlay">
+                                <button class="view-btn" onclick="openDemo('gaming', 1)">View Demo</button>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <span class="card-category">Gaming</span>
+                            <h3>Esports Team Platform</h3>
+                            <p>High-energy gaming team website with tournament tracking</p>
+                            <div class="card-tags">
+                                <span class="tag">Esports</span>
+                                <span class="tag">Gaming</span>
+                                <span class="tag">Community</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card" data-category="gaming">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=800&auto=format&fit=crop" alt="Gaming Studio">
+                            <div class="card-overlay">
+                                <button class="view-btn" onclick="openDemo('gaming', 2)">View Demo</button>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <span class="card-category">Gaming</span>
+                            <h3>Game Studio Portfolio</h3>
+                            <p>Showcase website for indie game development studio</p>
+                            <div class="card-tags">
+                                <span class="tag">Studio</span>
+                                <span class="tag">Portfolio</span>
+                                <span class="tag">Games</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Startup Projects -->
+                    <div class="portfolio-card" data-category="startup">
+                        <div class="card-image">
+                            <img src="assets/saas.png" alt="SaaS Platform">
+                            <div class="card-overlay">
+                                <button class="view-btn" onclick="openDemo('startup', 1)">View Demo</button>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <span class="card-category">Startup</span>
+                            <h3>SaaS Landing Page</h3>
+                            <p>Modern SaaS platform with feature showcase and pricing</p>
+                            <div class="card-tags">
+                                <span class="tag">SaaS</span>
+                                <span class="tag">Landing</span>
+                                <span class="tag">Startup</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card" data-category="startup">
+                        <div class="card-image">
+                            <img src="assets/startup.png" alt="Tech Startup">
+                            <div class="card-overlay">
+                                <button class="view-btn" onclick="openDemo('startup', 2)">View Demo</button>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <span class="card-category">Startup</span>
+                            <h3>Tech Startup MVP</h3>
+                            <p>Minimal viable product showcase for tech startups</p>
+                            <div class="card-tags">
+                                <span class="tag">MVP</span>
+                                <span class="tag">Tech</span>
+                                <span class="tag">Innovation</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- E-commerce Projects -->
+                    <div class="portfolio-card" data-category="ecommerce">
+                        <div class="card-image">
+                            <img src="assets/ecommerce.png" alt="Luxury Store">
+                            <div class="card-overlay">
+                                <button class="view-btn" onclick="openDemo('ecommerce', 1)">View Demo</button>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <span class="card-category">E-commerce</span>
+                            <h3>Luxury Fashion Store</h3>
+                            <p>Premium e-commerce experience for luxury brands</p>
+                            <div class="card-tags">
+                                <span class="tag">Fashion</span>
+                                <span class="tag">Luxury</span>
+                                <span class="tag">Shop</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-card" data-category="ecommerce">
+                        <div class="card-image">
+                            <img src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=800&auto=format&fit=crop" alt="Tech Store">
+                            <div class="card-overlay">
+                                <button class="view-btn" onclick="openDemo('ecommerce', 2)">View Demo</button>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <span class="card-category">E-commerce</span>
+                            <h3>Tech Products Store</h3>
+                            <p>Modern e-commerce platform for electronics and gadgets</p>
+                            <div class="card-tags">
+                                <span class="tag">Electronics</span>
+                                <span class="tag">Tech</span>
+                                <span class="tag">Store</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Ready to Start Your Project?</h2>
+                    <p>Let's create something amazing together</p>
+                    <a href="project-form.html" class="btn-primary btn-large">Get Started Now</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h2>Stack<span>web</span></h2>
+                <p>We build great websites with high contrast and incredible experiences.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#" class="social-link">Twitter</a>
+                <a href="#" class="social-link">Dribbble</a>
+                <a href="#" class="social-link">LinkedIn</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="year"></span> Stackweb. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Demo Modal -->
+    <div class="demo-modal" id="demoModal">
+        <div class="modal-overlay" onclick="closeDemo()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeDemo()">×</button>
+            <div class="modal-header">
+                <h3 id="demoTitle">Project Demo</h3>
+                <span class="demo-badge">Live Preview</span>
+            </div>
+            <div class="modal-body">
+                <iframe id="demoFrame" src="" frameborder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <p>This is a demo preview. Actual implementation may vary based on requirements.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="portfolio.js"></script>
+</body>
+</html>

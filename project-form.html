@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Your Project | Stackweb</title>
+    <meta name="description" content="Begin your journey with Stackweb - Fill out our project request form">
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="project-form.css">
+</head>
+<body>
+    
+    <!-- Background Elements -->
+    <div class="bg-gradient bg-gradient-1"></div>
+    <div class="bg-gradient bg-gradient-2"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Stack<span>web</span></a>
+            <a href="index.html" class="back-home">← Back to Home</a>
+        </div>
+    </header>
+
+    <!-- Main Form Container -->
+    <main class="form-wrapper">
+        <div class="form-container">
+            
+            <!-- Header -->
+            <div class="form-header">
+                <h1>Start Your <span class="text-accent">Project</span></h1>
+                <p>Let's bring your vision to life. Complete the form below to get started.</p>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-steps">
+                    <div class="step active" data-step="1">
+                        <div class="step-circle">1</div>
+                        <span class="step-label">Type</span>
+                    </div>
+                    <div class="step" data-step="2">
+                        <div class="step-circle">2</div>
+                        <span class="step-label">Details</span>
+                    </div>
+                    <div class="step" data-step="3">
+                        <div class="step-circle">3</div>
+                        <span class="step-label">Communication</span>
+                    </div>
+                    <div class="step" data-step="4">
+                        <div class="step-circle">4</div>
+                        <span class="step-label">Budget</span>
+                    </div>
+                    <div class="step" data-step="5">
+                        <div class="step-circle">5</div>
+                        <span class="step-label">Contact</span>
+                    </div>
+                    <div class="step" data-step="6">
+                        <div class="step-circle">6</div>
+                        <span class="step-label">Review</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Steps -->
+            <form id="projectForm">
+                
+                <!-- Step 1: Website Type -->
+                <div class="form-step active" data-step="1">
+                    <h2 class="step-title">Select Website Type</h2>
+                    <p class="step-description">Choose the category that best fits your project</p>
+                    
+                    <div class="options-grid">
+                        <label class="option-card">
+                            <input type="radio" name="websiteType" value="professional" required>
+                            <div class="card-content">
+                                <div class="card-icon">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="2" y="3" width="20" height="14" rx="2"/>
+                                        <line x1="8" y1="21" x2="16" y2="21"/>
+                                        <line x1="12" y1="17" x2="12" y2="21"/>
+                                    </svg>
+                                </div>
+                                <h3>Professional</h3>
+                                <p>Corporate & Business websites</p>
+                            </div>
+                        </label>
+
+                        <label class="option-card">
+                            <input type="radio" name="websiteType" value="gaming" required>
+                            <div class="card-content">
+                                <div class="card-icon">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="6" y1="2" x2="6" y2="6"/>
+                                        <line x1="18" y1="2" x2="18" y2="6"/>
+                                        <rect x="2" y="6" width="20" height="12" rx="2"/>
+                                        <circle cx="8" cy="12" r="2"/>
+                                        <circle cx="16" cy="10" r="1"/>
+                                        <circle cx="16" cy="14" r="1"/>
+                                    </svg>
+                                </div>
+                                <h3>Gaming</h3>
+                                <p>Gaming & Esports platforms</p>
+                            </div>
+                        </label>
+
+                        <label class="option-card">
+                            <input type="radio" name="websiteType" value="startup" required>
+                            <div class="card-content">
+                                <div class="card-icon">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                        <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                                    </svg>
+                                </div>
+                                <h3>Startups</h3>
+                                <p>MVP & SaaS applications</p>
+                            </div>
+                        </label>
+
+                        <label class="option-card">
+                            <input type="radio" name="websiteType" value="api" required>
+                            <div class="card-content">
+                                <div class="card-icon">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="16 18 22 12 16 6"/>
+                                        <polyline points="8 6 2 12 8 18"/>
+                                    </svg>
+                                </div>
+                                <h3>API & Backend</h3>
+                                <p>Backend Services</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Step 2: Project Details -->
+                <div class="form-step" data-step="2">
+                    <h2 class="step-title">Project Details</h2>
+                    <p class="step-description">Tell us about your project</p>
+                    
+                    <div class="form-fields">
+                        <div class="input-group">
+                            <label for="projectName">Project Name *</label>
+                            <input type="text" id="projectName" name="projectName" required placeholder="Enter your project name">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="projectDescription">Project Description *</label>
+                            <textarea id="projectDescription" name="projectDescription" rows="6" required placeholder="Describe your project, goals, target audience, and any specific requirements..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Communication Method -->
+                <div class="form-step" data-step="3">
+                    <h2 class="step-title">Communication Method</h2>
+                    <p class="step-description">How would you like to communicate with us?</p>
+                    
+                    <div class="options-grid communication-grid">
+                        <label class="option-card">
+                            <input type="radio" name="communication" value="admin-panel" required>
+                            <div class="card-content">
+                                <div class="card-icon">
+                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                        <path d="M9 3v18M3 9h18M3 15h18"/>
+                                    </svg>
+                                </div>
+                                <h3>Admin Panel</h3>
+                            </div>
+                        </label>
+
+                        <label class="option-card">
+                            <input type="radio" name="communication" value="gmail" required>
+                            <div class="card-content">
+                                <div class="card-icon">
+                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                        <polyline points="22,6 12,13 2,6"/>
+                                    </svg>
+                                </div>
+                                <h3>Gmail</h3>
+                            </div>
+                        </label>
+
+                        <label class="option-card">
+                            <input type="radio" name="communication" value="whatsapp" required>
+                            <div class="card-content">
+                                <div class="card-icon">
+                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                                    </svg>
+                                </div>
+                                <h3>WhatsApp</h3>
+                            </div>
+                        </label>
+
+                        <label class="option-card">
+                            <input type="radio" name="communication" value="sms" required>
+                            <div class="card-content">
+                                <div class="card-icon">
+                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                    </svg>
+                                </div>
+                                <h3>SMS</h3>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Step 4: Budget -->
+                <div class="form-step" data-step="4">
+                    <h2 class="step-title">Project Budget</h2>
+                    <p class="step-description">Set your investment range</p>
+                    
+                    <div class="form-fields">
+                        <div class="budget-info">
+                            <div class="info-icon">ℹ️</div>
+                            <div class="info-content">
+                                <strong>Starting from ₹5,000</strong>
+                                <p>Includes domain, hosting, and complete website development</p>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="budget">Your Budget (₹) *</label>
+                            <input type="number" id="budget" name="budget" min="5000" step="1000" required placeholder="Minimum ₹5,000">
+                            <span class="input-hint">Minimum budget: ₹5,000</span>
+                        </div>
+
+                        <div class="budget-benefits">
+                            <h4>💡 Higher Budget Benefits:</h4>
+                            <ul>
+                                <li>Premium custom design</li>
+                                <li>Advanced features & integrations</li>
+                                <li>Smooth animations & interactions</li>
+                                <li>Priority support & faster delivery</li>
+                                <li>SEO optimization & performance tuning</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Contact Information -->
+                <div class="form-step" data-step="5">
+                    <h2 class="step-title">Contact Information</h2>
+                    <p class="step-description">How can we reach you?</p>
+                    
+                    <div class="form-fields">
+                        <div class="input-group">
+                            <label for="fullName">Full Name *</label>
+                            <input type="text" id="fullName" name="fullName" required placeholder="John Doe">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required placeholder="john@example.com">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required placeholder="+91 98765 43210">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="company">Company Name (Optional)</label>
+                            <input type="text" id="company" name="company" placeholder="Your Company">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 6: Review & Submit -->
+                <div class="form-step" data-step="6">
+                    <h2 class="step-title">Review Your Submission</h2>
+                    <p class="step-description">Please verify all information before submitting</p>
+                    
+                    <div class="review-container">
+                        <div class="review-section">
+                            <h3>Website Type</h3>
+                            <p id="reviewType">-</p>
+                        </div>
+
+                        <div class="review-section">
+                            <h3>Project Details</h3>
+                            <p><strong>Name:</strong> <span id="reviewProjectName">-</span></p>
+                            <p><strong>Description:</strong> <span id="reviewDescription">-</span></p>
+                        </div>
+
+                        <div class="review-section">
+                            <h3>Communication</h3>
+                            <p id="reviewCommunication">-</p>
+                        </div>
+
+                        <div class="review-section">
+                            <h3>Budget</h3>
+                            <p id="reviewBudget">-</p>
+                        </div>
+
+                        <div class="review-section">
+                            <h3>Contact Information</h3>
+                            <p><strong>Name:</strong> <span id="reviewName">-</span></p>
+                            <p><strong>Email:</strong> <span id="reviewEmail">-</span></p>
+                            <p><strong>Phone:</strong> <span id="reviewPhone">-</span></p>
+                            <p><strong>Company:</strong> <span id="reviewCompany">-</span></p>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+            <!-- Navigation Buttons -->
+            <div class="form-navigation">
+                <button type="button" class="btn-secondary" id="prevBtn" style="display: none;">
+                    ← Previous
+                </button>
+                <button type="button" class="btn-primary" id="nextBtn">
+                    Next →
+                </button>
+                <button type="submit" class="btn-primary" id="submitBtn" style="display: none;">
+                    Submit Project
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="success-icon">✓</div>
+            <h2>Project Submitted Successfully!</h2>
+            <p>Thank you for choosing Stackweb. We'll review your project and get back to you within 24 hours.</p>
+            <a href="index.html" class="btn-primary">Back to Home</a>
+        </div>
+    </div>
+
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <script>
+        // Inline Supabase Configuration and Service for Project Form
+        const SUPABASE_URL = 'https://axcyusvthsoruuzjoxil.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4Y3l1c3Z0aHNvcnV1empveGlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5NjUwMjIsImV4cCI6MjA4ODU0MTAyMn0.yh0zagPHaG0BKJvp6P2QwbPreFR7E-fTONa7CPkTT6Y';
+        
+        let supabaseClient = null;
+        
+        function initSupabase() {
+            if (typeof window.supabase !== 'undefined') {
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+                console.log('✅ Supabase client initialized for project form');
+                return supabaseClient;
+            }
+            return null;
+        }
+        
+        // Supabase Service
+        class SupabaseService {
+            constructor() {
+                this.client = null;
+                this.tableName = 'projects';
+            }
+            
+            init() {
+                this.client = supabaseClient || initSupabase();
+                return this.client !== null;
+            }
+            
+            async saveProject(projectData) {
+                if (!this.client) this.init();
+                
+                try {
+                    const { data, error } = await this.client
+                        .from(this.tableName)
+                        .insert([
+                            {
+                                website_type: projectData.websiteType,
+                                project_name: projectData.projectName,
+                                project_description: projectData.projectDescription,
+                                communication_method: projectData.communication,
+                                budget: projectData.budget,
+                                full_name: projectData.fullName,
+                                email: projectData.email,
+                                phone: projectData.phone,
+                                company: projectData.company || null,
+                                status: 'new',
+                                created_at: new Date().toISOString()
+                            }
+                        ])
+                        .select();
+                    
+                    if (error) {
+                        console.error('Error saving project:', error);
+                        return { success: false, error: error.message };
+                    }
+                    
+                    console.log('✅ Project saved successfully:', data);
+                    return { success: true, data: data[0] };
+                } catch (error) {
+                    console.error('Exception saving project:', error);
+                    return { success: false, error: error.message };
+                }
+            }
+        }
+        
+        // Initialize service
+        window.supabaseService = new SupabaseService();
+        
+        // Wait for Supabase library to load
+        function waitAndInit() {
+            if (typeof window.supabase !== 'undefined') {
+                initSupabase();
+                window.supabaseService.init();
+                console.log('✅ Project form service ready');
+            } else {
+                setTimeout(waitAndInit, 100);
+            }
+        }
+        waitAndInit();
+    </script>
+    
+    <script src="project-form.js"></script>
+</body>
+</html>

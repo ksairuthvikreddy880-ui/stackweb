@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Admin Connection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .test-box {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        button {
+            background: #00f0ff;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #00d0df;
+        }
+        .success { color: #00ff00; }
+        .error { color: #ff4444; }
+        pre {
+            background: #000;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 Supabase Admin Connection Test</h1>
+    
+    <div class="test-box">
+        <h2>Step 1: Test Supabase Connection</h2>
+        <button onclick="testConnection()">Test Connection</button>
+        <div id="connectionResult"></div>
+    </div>
+
+    <div class="test-box">
+        <h2>Step 2: Check if Table Exists</h2>
+        <button onclick="checkTable()">Check Table</button>
+        <div id="tableResult"></div>
+    </div>
+
+    <div class="test-box">
+        <h2>Step 3: Test Insert</h2>
+        <button onclick="testInsert()">Insert Test Project</button>
+        <div id="insertResult"></div>
+    </div>
+
+    <div class="test-box">
+        <h2>Step 4: Test Read</h2>
+        <button onclick="testRead()">Read All Projects</button>
+        <div id="readResult"></div>
+    </div>
+
+    <div class="test-box">
+        <h2>SQL to Run in Supabase</h2>
+        <p>If tests fail, copy and run this SQL in Supabase SQL Editor:</p>
+        <pre id="sqlCode">-- Drop and recreate table
+DROP TABLE IF EXISTS projects CASCADE;
+
+CREATE TABLE projects (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    website_type VARCHAR(50) NOT NULL,
+    project_name VARCHAR(255) NOT NULL,
+    project_description TEXT NOT NULL,
+    communication_method VARCHAR(50) NOT NULL,
+    budget INTEGER NOT NULL,
+    full_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(50) NOT NULL,
+    company VARCHAR(255),
+    status VARCHAR(50) DEFAULT 'new',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Enable RLS
+ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
+
+-- Allow all operations for anonymous users
+CREATE POLICY "Allow all operations" ON projects
+    FOR ALL
+    TO anon, authenticated
+    USING (true)
+    WITH CHECK (true);
+
+-- Create indexes
+CREATE INDEX idx_projects_status ON projects(status);
+CREATE INDEX idx_projects_created_at ON projects(created_at DESC);</pre>
+        <button onclick="copySQL()">Copy SQL</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://axcyusvthsoruuzjoxil.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4Y3l1c3Z0aHNvcnV1empveGlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5NjUwMjIsImV4cCI6MjA4ODU0MTAyMn0.yh0zagPHaG0BKJvp6P2QwbPreFR7E-fTONa7CPkTT6Y';
+        
+        let client;
+
+        async function testConnection() {
+            const result = document.getElementById('connectionResult');
+            result.innerHTML = '<p>Testing...</p>';
+            
+            try {
+                client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+                result.innerHTML = '<p class="success">✅ Supabase client created successfully!</p>';
+                console.log('Client:', client);
+            } catch (error) {
+                result.innerHTML = `<p class="error">❌ Error: ${error.message}</p>`;
+                console.error(error);
+            }
+        }
+
+        async function checkTable() {
+            const result = document.getElementById('tableResult');
+            result.innerHTML = '<p>Checking...</p>';
+            
+            if (!client) {
+                result.innerHTML = '<p class="error">❌ Please test connection first</p>';
+                return;
+            }
+
+            try {
+                const { data, error } = await client
+                    .from('projects')
+                    .select('count')
+                    .limit(1);
+
+                if (error) {
+                    result.innerHTML = `<p class="error">❌ Table check failed: ${error.message}</p>
+                        <p>This usually means the table doesn't exist or RLS is blocking access.</p>
+                        <p><strong>Action:</strong> Run the SQL in Step 5 below in your Supabase SQL Editor.</p>`;
+                    console.error('Table error:', error);
+                } else {
+                    result.innerHTML = '<p class="success">✅ Table exists and is accessible!</p>';
+                }
+            } catch (error) {
+                result.innerHTML = `<p class="error">❌ Exception: ${error.message}</p>`;
+                console.error(error);
+            }
+        }
+
+        async function testInsert() {
+            const result = document.getElementById('insertResult');
+            result.innerHTML = '<p>Inserting...</p>';
+            
+            if (!client) {
+                result.innerHTML = '<p class="error">❌ Please test connection first</p>';
+                return;
+            }
+
+            try {
+                const { data, error } = await client
+                    .from('projects')
+                    .insert([
+                        {
+                            website_type: 'professional',
+                            project_name: 'Test Project',
+                            project_description: 'This is a test project',
+                            communication_method: 'gmail',
+                            budget: 10000,
+                            full_name: 'Test User',
+                            email: 'test@example.com',
+                            phone: '+91 9876543210',
+                            company: 'Test Company'
+                        }
+                    ])
+                    .select();
+
+                if (error) {
+                    result.innerHTML = `<p class="error">❌ Insert failed: ${error.message}</p>`;
+                    console.error('Insert error:', error);
+                } else {
+                    result.innerHTML = `<p class="success">✅ Test project inserted successfully!</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<p class="error">❌ Exception: ${error.message}</p>`;
+                console.error(error);
+            }
+        }
+
+        async function testRead() {
+            const result = document.getElementById('readResult');
+            result.innerHTML = '<p>Reading...</p>';
+            
+            if (!client) {
+                result.innerHTML = '<p class="error">❌ Please test connection first</p>';
+                return;
+            }
+
+            try {
+                const { data, error } = await client
+                    .from('projects')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) {
+                    result.innerHTML = `<p class="error">❌ Read failed: ${error.message}</p>
+                        <p><strong>Common causes:</strong></p>
+                        <ul>
+                            <li>Table doesn't exist - Run the SQL below</li>
+                            <li>RLS policies blocking access - Run the SQL below</li>
+                        </ul>`;
+                    console.error('Read error:', error);
+                } else {
+                    result.innerHTML = `<p class="success">✅ Found ${data.length} project(s)!</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>`;
+                }
+            } catch (error) {
+                result.innerHTML = `<p class="error">❌ Exception: ${error.message}</p>`;
+                console.error(error);
+            }
+        }
+
+        function copySQL() {
+            const sql = document.getElementById('sqlCode').textContent;
+            navigator.clipboard.writeText(sql).then(() => {
+                alert('✅ SQL copied to clipboard! Now paste it in Supabase SQL Editor and click Run.');
+            });
+        }
+
+        // Auto-test connection on load
+        window.addEventListener('load', () => {
+            setTimeout(testConnection, 500);
+        });
+    </script>
+</body>
+</html>

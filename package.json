@@ -1,0 +1,21 @@
+{
+  "name": "stackweb",
+  "version": "1.0.0",
+  "description": "Premium Web Design Agency - High Performance Website",
+  "scripts": {
+    "optimize": "node optimize.js",
+    "serve": "npx http-server -p 8080 -c-1",
+    "build": "npm run optimize",
+    "lighthouse": "npx lighthouse http://localhost:8080 --view"
+  },
+  "keywords": [
+    "web-design",
+    "agency",
+    "portfolio",
+    "performance"
+  ],
+  "author": "Stackweb",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}

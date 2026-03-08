@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supabase Connection Test | Stackweb</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #050505;
+            color: #fff;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        h1 {
+            color: #00f0ff;
+            margin-bottom: 1rem;
+        }
+        .status {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+            border-left: 4px solid;
+        }
+        .status.success {
+            background: rgba(0, 255, 0, 0.1);
+            border-color: #00ff00;
+        }
+        .status.error {
+            background: rgba(255, 0, 0, 0.1);
+            border-color: #ff0000;
+        }
+        .status.info {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: #00f0ff;
+        }
+        button {
+            background: #00f0ff;
+            color: #000;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+        button:hover {
+            background: #00d4dd;
+        }
+        pre {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .step {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 5px;
+        }
+        .step h3 {
+            color: #00f0ff;
+            margin-bottom: 0.5rem;
+        }
+        code {
+            background: rgba(0, 240, 255, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔌 Supabase Connection Test</h1>
+        
+        <div class="status info">
+            <strong>Project URL:</strong> https://axcyusvthsoruuzjoxil.supabase.co<br>
+            <strong>Status:</strong> <span id="connectionStatus">Testing...</span>
+        </div>
+
+        <div class="step">
+            <h3>Step 1: Test Connection</h3>
+            <p>Click the button below to test if Supabase is connected properly.</p>
+            <button onclick="testConnection()">Test Connection</button>
+            <div id="connectionResult"></div>
+        </div>
+
+        <div class="step">
+            <h3>Step 2: Create Database Table</h3>
+            <p>Go to your Supabase dashboard and run this SQL:</p>
+            <ol style="margin-left: 2rem; margin-top: 1rem;">
+                <li>Open <a href="https://supabase.com/dashboard/project/axcyusvthsoruuzjoxil/editor" target="_blank" style="color: #00f0ff;">Supabase SQL Editor</a></li>
+                <li>Copy the SQL from <code>supabase-schema.sql</code></li>
+                <li>Paste and click "Run"</li>
+            </ol>
+            <button onclick="window.open('https://supabase.com/dashboard/project/axcyusvthsoruuzjoxil/editor', '_blank')">Open SQL Editor</button>
+        </div>
+
+        <div class="step">
+            <h3>Step 3: Test Database Operations</h3>
+            <p>After creating the table, test if you can save data.</p>
+            <button onclick="testInsert()">Test Insert</button>
+            <button onclick="testRead()">Test Read</button>
+            <div id="dbTestResult"></div>
+        </div>
+
+        <div class="step">
+            <h3>Step 4: View Your Data</h3>
+            <p>Check your submissions in the Supabase dashboard.</p>
+            <button onclick="window.open('https://supabase.com/dashboard/project/axcyusvthsoruuzjoxil/editor', '_blank')">Open Table Editor</button>
+        </div>
+
+        <div id="output"></div>
+    </div>
+
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/supabase-service.js"></script>
+
+    <script>
+        function log(message, type = 'info') {
+            const output = document.getElementById('output');
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.innerHTML = message;
+            output.appendChild(div);
+        }
+
+        async function testConnection() {
+            const resultDiv = document.getElementById('connectionResult');
+            const statusSpan = document.getElementById('connectionStatus');
+            
+            resultDiv.innerHTML = '<p>Testing connection...</p>';
+            
+            try {
+                const client = window.getSupabaseClient();
+                
+                if (!client) {
+                    throw new Error('Failed to initialize Supabase client');
+                }
+
+                // Test connection by checking if we can access the database
+                const { data, error } = await client.from('projects').select('count', { count: 'exact', head: true });
+                
+                if (error && error.code === '42P01') {
+                    // Table doesn't exist yet
+                    statusSpan.textContent = 'Connected (Table not created yet)';
+                    resultDiv.innerHTML = '<div class="status info"><strong>✅ Connection Successful!</strong><br>But the "projects" table doesn\'t exist yet. Please run the SQL schema (Step 2).</div>';
+                } else if (error) {
+                    throw error;
+                } else {
+                    statusSpan.textContent = 'Connected & Ready';
+                    resultDiv.innerHTML = '<div class="status success"><strong>✅ Connection Successful!</strong><br>Supabase is connected and the table exists. You\'re ready to go!</div>';
+                }
+            } catch (error) {
+                statusSpan.textContent = 'Connection Failed';
+                resultDiv.innerHTML = `<div class="status error"><strong>❌ Connection Failed</strong><br>${error.message}</div>`;
+                console.error('Connection test failed:', error);
+            }
+        }
+
+        async function testInsert() {
+            const resultDiv = document.getElementById('dbTestResult');
+            resultDiv.innerHTML = '<p>Testing insert...</p>';
+            
+            try {
+                const testData = {
+                    websiteType: 'professional',
+                    projectName: 'Test Project ' + Date.now(),
+                    projectDescription: 'This is a test project submission',
+                    communication: 'gmail',
+                    budget: 25000,
+                    fullName: 'Test User',
+                    email: 'test@example.com',
+                    phone: '+91 9876543210',
+                    company: 'Test Company'
+                };
+
+                const result = await window.supabaseService.saveProject(testData);
+                
+                if (result.success) {
+                    resultDiv.innerHTML = `<div class="status success"><strong>✅ Insert Successful!</strong><br>Project ID: ${result.data.id}<br><pre>${JSON.stringify(result.data, null, 2)}</pre></div>`;
+                } else {
+                    throw new Error(result.error);
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="status error"><strong>❌ Insert Failed</strong><br>${error.message}<br><br>Make sure you've run the SQL schema first!</div>`;
+                console.error('Insert test failed:', error);
+            }
+        }
+
+        async function testRead() {
+            const resultDiv = document.getElementById('dbTestResult');
+            resultDiv.innerHTML = '<p>Reading projects...</p>';
+            
+            try {
+                const result = await window.supabaseService.getAllProjects();
+                
+                if (result.success) {
+                    resultDiv.innerHTML = `<div class="status success"><strong>✅ Read Successful!</strong><br>Found ${result.data.length} project(s)<br><pre>${JSON.stringify(result.data, null, 2)}</pre></div>`;
+                } else {
+                    throw new Error(result.error);
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="status error"><strong>❌ Read Failed</strong><br>${error.message}</div>`;
+                console.error('Read test failed:', error);
+            }
+        }
+
+        // Auto-test connection on load
+        window.addEventListener('load', () => {
+            setTimeout(testConnection, 1000);
+        });
+    </script>
+</body>
+</html>

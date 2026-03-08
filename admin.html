@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Stackweb</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    
+    <!-- Background Elements -->
+    <div class="bg-gradient bg-gradient-1"></div>
+    <div class="bg-gradient bg-gradient-2"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- Login Screen -->
+    <div class="login-container" id="loginScreen">
+        <div class="login-box">
+            <div class="logo">Stack<span>web</span></div>
+            <h2>Admin Access</h2>
+            <p>Enter admin code to continue</p>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="password" id="adminCode" placeholder="Enter Admin Code" required autofocus>
+                </div>
+                <button type="submit" class="btn-primary">Access Panel</button>
+            </form>
+            
+            <div class="error-message" id="errorMessage"></div>
+            
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel" style="display: none;">
+        
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="header-content">
+                <div class="logo">Stack<span>web</span> Admin</div>
+                <div class="header-actions">
+                    <button class="btn-refresh" onclick="loadProjects()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+                        </svg>
+                        Refresh
+                    </button>
+                    <button class="btn-logout" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats Cards -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: rgba(0, 240, 255, 0.1);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalProjects">0</h3>
+                    <p>Total Projects</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: rgba(138, 43, 226, 0.1);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8a2be2" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 6v6l4 2"/>
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <h3 id="newProjects">0</h3>
+                    <p>New Projects</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: rgba(0, 255, 0, 0.1);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00ff00" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <h3 id="avgBudget">₹0</h3>
+                    <p>Avg Budget</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-container">
+            <div class="filter-group">
+                <label>Status:</label>
+                <select id="statusFilter" onchange="filterProjects()">
+                    <option value="all">All Status</option>
+                    <option value="new">New</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Type:</label>
+                <select id="typeFilter" onchange="filterProjects()">
+                    <option value="all">All Types</option>
+                    <option value="professional">Professional</option>
+                    <option value="gaming">Gaming</option>
+                    <option value="startup">Startup</option>
+                    <option value="api">API & Backend</option>
+                </select>
+            </div>
+
+            <div class="filter-group search-group">
+                <input type="text" id="searchInput" placeholder="Search by name, email..." onkeyup="filterProjects()">
+            </div>
+        </div>
+
+        <!-- Projects Table -->
+        <div class="table-container">
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Loading projects...</p>
+            </div>
+
+            <div id="noProjects" style="display: none;" class="no-data">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 11l3 3L22 4"/>
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                </svg>
+                <h3>No Projects Yet</h3>
+                <p>Projects submitted through the form will appear here.</p>
+            </div>
+
+            <table id="projectsTable" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Project Name</th>
+                        <th>Client</th>
+                        <th>Type</th>
+                        <th>Budget</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="projectsBody">
+                    <!-- Projects will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- Project Detail Modal -->
+    <div class="modal" id="projectModal">
+        <div class="modal-overlay" onclick="closeModal()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div id="modalBody">
+                <!-- Project details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <script>
+        // Inline Supabase Configuration and Service
+        const SUPABASE_URL = 'https://axcyusvthsoruuzjoxil.supabase.co';
+        // Using service_role key for admin panel (bypasses RLS)
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4Y3l1c3Z0aHNvcnV1empveGlsIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mjk2NTAyMiwiZXhwIjoyMDg4NTQxMDIyfQ.cnz73t4NR5_l-vHSB4g4zUFD6K5hfOII0iwfIIW2ND0';
+        
+        // Initialize Supabase client
+        let supabaseClient = null;
+        
+        function initSupabase() {
+            if (typeof window.supabase !== 'undefined') {
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+                console.log('✅ Supabase client initialized with service role');
+                return supabaseClient;
+            }
+            return null;
+        }
+        
+        // Supabase Service
+        class SupabaseService {
+            constructor() {
+                this.client = null;
+                this.tableName = 'projects';
+            }
+            
+            init() {
+                this.client = supabaseClient || initSupabase();
+                return this.client !== null;
+            }
+            
+            async getAllProjects() {
+                if (!this.client) this.init();
+                
+                try {
+                    const { data, error } = await this.client
+                        .from(this.tableName)
+                        .select('*')
+                        .order('created_at', { ascending: false });
+                    
+                    if (error) {
+                        console.error('Error fetching projects:', error);
+                        return { success: false, error: error.message };
+                    }
+                    
+                    return { success: true, data };
+                } catch (error) {
+                    console.error('Exception fetching projects:', error);
+                    return { success: false, error: error.message };
+                }
+            }
+            
+            async updateProjectStatus(id, status) {
+                if (!this.client) this.init();
+                
+                try {
+                    const { data, error } = await this.client
+                        .from(this.tableName)
+                        .update({ status, updated_at: new Date().toISOString() })
+                        .eq('id', id)
+                        .select();
+                    
+                    if (error) {
+                        return { success: false, error: error.message };
+                    }
+                    
+                    return { success: true, data: data[0] };
+                } catch (error) {
+                    return { success: false, error: error.message };
+                }
+            }
+        }
+        
+        // Initialize service
+        window.supabaseService = new SupabaseService();
+        
+        // Wait for Supabase library to load
+        function waitAndInit() {
+            if (typeof window.supabase !== 'undefined') {
+                initSupabase();
+                window.supabaseService.init();
+                console.log('✅ Service ready');
+            } else {
+                setTimeout(waitAndInit, 100);
+            }
+        }
+        waitAndInit();
+    </script>
+    
+    <script src="admin.js"></script>
+</body>
+</html>
