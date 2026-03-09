@@ -177,6 +177,7 @@ function displayProjects() {
             <td><span class="status-badge status-${project.status}">${formatStatus(project.status)}</span></td>
             <td>
                 <button class="btn-view" onclick="viewProject('${project.id}')">View Details</button>
+                <button class="btn-delete" onclick="deleteProject('${project.id}', '${project.project_name}')" style="margin-left: 0.5rem;">Delete</button>
             </td>
         `;
         
@@ -359,6 +360,37 @@ function formatCommunication(method) {
         'sms': 'SMS'
     };
     return methods[method] || method;
+}
+
+// Delete project
+async function deleteProject(projectId, projectName) {
+    // Confirm deletion
+    const confirmed = confirm(`Are you sure you want to delete the project "${projectName}"?\n\nThis action cannot be undone.`);
+    
+    if (!confirmed) {
+        return;
+    }
+    
+    try {
+        // Check if service has delete method
+        if (!window.supabaseService.deleteProject) {
+            alert('Delete functionality not available. Please refresh the page.');
+            return;
+        }
+        
+        const result = await window.supabaseService.deleteProject(projectId);
+        
+        if (result.success) {
+            alert('✅ Project deleted successfully!');
+            // Reload projects
+            loadProjects();
+        } else {
+            alert(`❌ Failed to delete project: ${result.error}`);
+        }
+    } catch (error) {
+        alert(`❌ Error: ${error.message}`);
+        console.error('Delete error:', error);
+    }
 }
 
 // Close modal on ESC key

@@ -427,6 +427,23 @@ tr:hover {
     background: rgba(0, 240, 255, 0.2);
 }
 
+.btn-delete {
+    padding: 0.5rem 1rem;
+    background: rgba(255, 68, 68, 0.1);
+    color: #ff4444;
+    border: 1px solid #ff4444;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font-main);
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+
+.btn-delete:hover {
+    background: rgba(255, 68, 68, 0.2);
+    transform: translateY(-2px);
+}
+
 /* Modal */
 .modal {
     display: none;
