@@ -27,14 +27,6 @@ class ProjectForm {
         this.nextBtn.addEventListener('click', () => this.nextStep());
         this.submitBtn.addEventListener('click', () => this.submitForm());
 
-        // Budget validation
-        const budgetInput = document.getElementById('budget');
-        budgetInput.addEventListener('input', (e) => {
-            if (e.target.value && parseInt(e.target.value) < 5000) {
-                e.target.value = 5000;
-            }
-        });
-
         // Real-time validation for required fields
         const inputs = this.form.querySelectorAll('input, textarea');
         inputs.forEach(input => {
