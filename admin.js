@@ -177,13 +177,23 @@ function displayProjects() {
             <td><span class="status-badge status-${project.status}">${formatStatus(project.status)}</span></td>
             <td>
                 <button class="btn-view" onclick="viewProject('${project.id}')">View Details</button>
-                <button class="btn-delete" onclick="deleteProject('${project.id}', '${project.project_name}')" style="margin-left: 0.5rem;">Delete</button>
+                <button class="btn-delete" data-project-id="${project.id}" data-project-name="${project.project_name.replace(/"/g, '&quot;')}" style="margin-left: 0.5rem;">Delete</button>
             </td>
         `;
         
+        // Add event listener to delete button
+        const deleteBtn = row.querySelector('.btn-delete');
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', function() {
+                const projectId = this.getAttribute('data-project-id');
+                const projectName = this.getAttribute('data-project-name');
+                deleteProject(projectId, projectName);
+            });
+        }
+        
         tbody.appendChild(row);
     });
-}
+}}
 
 // Filter projects
 function filterProjects() {
