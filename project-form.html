@@ -162,11 +162,11 @@
                 <!-- Step 3: Communication Method -->
                 <div class="form-step" data-step="3">
                     <h2 class="step-title">Communication Method</h2>
-                    <p class="step-description">How would you like to communicate with us?</p>
+                    <p class="step-description">How would you like to communicate with us? (Select one or more)</p>
                     
                     <div class="options-grid communication-grid">
                         <label class="option-card">
-                            <input type="radio" name="communication" value="admin-panel" required>
+                            <input type="checkbox" name="communication" value="admin-panel">
                             <div class="card-content">
                                 <div class="card-icon">
                                     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -179,7 +179,7 @@
                         </label>
 
                         <label class="option-card">
-                            <input type="radio" name="communication" value="gmail" required>
+                            <input type="checkbox" name="communication" value="gmail">
                             <div class="card-content">
                                 <div class="card-icon">
                                     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -192,7 +192,7 @@
                         </label>
 
                         <label class="option-card">
-                            <input type="radio" name="communication" value="whatsapp" required>
+                            <input type="checkbox" name="communication" value="whatsapp">
                             <div class="card-content">
                                 <div class="card-icon">
                                     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -204,7 +204,7 @@
                         </label>
 
                         <label class="option-card">
-                            <input type="radio" name="communication" value="sms" required>
+                            <input type="checkbox" name="communication" value="sms">
                             <div class="card-content">
                                 <div class="card-icon">
                                     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -381,6 +381,12 @@
                 if (!this.client) this.init();
                 
                 try {
+                    // Handle communication method - convert array to string if needed
+                    let communicationMethod = projectData.communication;
+                    if (Array.isArray(communicationMethod)) {
+                        communicationMethod = communicationMethod.join(', ');
+                    }
+                    
                     const { data, error } = await this.client
                         .from(this.tableName)
                         .insert([
@@ -388,7 +394,7 @@
                                 website_type: projectData.websiteType,
                                 project_name: projectData.projectName,
                                 project_description: projectData.projectDescription,
-                                communication_method: projectData.communication,
+                                communication_method: communicationMethod,
                                 budget: projectData.budget,
                                 full_name: projectData.fullName,
                                 email: projectData.email,

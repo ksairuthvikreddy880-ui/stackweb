@@ -73,11 +73,27 @@ class ProjectForm {
             }
         });
 
-        // Special validation for budget
+        // Special validation for communication method (checkboxes - at least one required)
+        if (this.currentStep === 3) {
+            const checkboxes = currentStepElement.querySelectorAll('input[name="communication"]');
+            const isAnyChecked = Array.from(checkboxes).some(cb => cb.checked);
+            if (!isAnyChecked) {
+                alert('Please select at least one communication method.');
+                isValid = false;
+            }
+        }
+
+        // Special validation for budget - must be >= 5000
         if (this.currentStep === 4) {
             const budgetInput = document.getElementById('budget');
-            if (budgetInput.value && parseInt(budgetInput.value) < 5000) {
-                alert('Minimum budget is ₹5,000');
+            const budgetValue = parseInt(budgetInput.value);
+            
+            if (!budgetInput.value) {
+                alert('Please enter your budget.');
+                isValid = false;
+            } else if (budgetValue < 5000) {
+                alert('Minimum budget is ₹5,000. Please enter a value of ₹5,000 or more.');
+                budgetInput.value = 5000; // Reset to minimum
                 isValid = false;
             }
         }
@@ -120,10 +136,23 @@ class ProjectForm {
                 if (input.checked) {
                     this.formData[input.name] = input.value;
                 }
+            } else if (input.type === 'checkbox' && input.name === 'communication') {
+                // Handle multiple communication methods
+                if (!this.formData.communication) {
+                    this.formData.communication = [];
+                }
+                if (input.checked) {
+                    this.formData.communication.push(input.value);
+                }
             } else {
                 this.formData[input.name] = input.value;
             }
         });
+        
+        // Convert communication array to string for storage
+        if (Array.isArray(this.formData.communication)) {
+            this.formData.communicationMethods = this.formData.communication.join(', ');
+        }
     }
 
     updateUI() {
@@ -179,7 +208,15 @@ class ProjectForm {
             'whatsapp': 'WhatsApp',
             'sms': 'SMS'
         };
-        document.getElementById('reviewCommunication').textContent = commLabels[this.formData.communication] || '-';
+        
+        // Handle multiple communication methods
+        let communicationText = '-';
+        if (Array.isArray(this.formData.communication) && this.formData.communication.length > 0) {
+            communicationText = this.formData.communication.map(method => commLabels[method] || method).join(', ');
+        } else if (this.formData.communication) {
+            communicationText = commLabels[this.formData.communication] || this.formData.communication;
+        }
+        document.getElementById('reviewCommunication').textContent = communicationText;
 
         // Budget
         const budget = this.formData.budget ? `₹${parseInt(this.formData.budget).toLocaleString('en-IN')}` : '-';
