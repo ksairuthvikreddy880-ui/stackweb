@@ -3,6 +3,8 @@
 // Admin password from config
 const ADMIN_PASSWORD = window.CONFIG?.admin?.password || 'stackweb@qwerty';
 
+console.log('Admin password loaded:', ADMIN_PASSWORD ? 'Yes' : 'No');
+
 let allProjects = [];
 let filteredProjects = [];
 
@@ -28,8 +30,12 @@ window.addEventListener('DOMContentLoaded', () => {
 document.getElementById('loginForm').addEventListener('submit', (e) => {
     e.preventDefault();
     
-    const code = document.getElementById('adminCode').value;
+    const code = document.getElementById('adminCode').value.trim();
     const errorMessage = document.getElementById('errorMessage');
+    
+    console.log('Entered code:', code);
+    console.log('Expected password:', ADMIN_PASSWORD);
+    console.log('Match:', code === ADMIN_PASSWORD);
     
     if (code === ADMIN_PASSWORD) {
         sessionStorage.setItem('adminLoggedIn', 'true');

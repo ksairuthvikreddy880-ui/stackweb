@@ -201,11 +201,13 @@
             constructor() {
                 this.client = null;
                 this.tableName = 'projects';
+                this.initialized = false;
             }
             
             init() {
                 this.client = supabaseClient || initSupabase();
-                return this.client !== null;
+                this.initialized = this.client !== null;
+                return this.initialized;
             }
             
             async getAllProjects() {
